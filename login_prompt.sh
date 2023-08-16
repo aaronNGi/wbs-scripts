@@ -2,9 +2,10 @@
 
 set -e
 
-cookiejar=${XDG_CACHE_HOME:-$HOME/.cache}/wbs_cookies
+cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}
+cookiejar=$cache_dir/wbs_cookies
 
-! [ -e "${cookiejar%/*}" ] &&
+! [ -e "$cache_dir" ] &&
 	mkdir -p -- "$cache_dir" >/dev/null
 
 printf 'Username: ' >&2
