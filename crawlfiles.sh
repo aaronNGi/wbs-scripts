@@ -28,6 +28,12 @@ crawl() {
 		name=${line%</a>*}
 		name=${name##*>}
 
+  
+		# No slashes in directory names please!
+    		case $name in */*)
+      			name=$(printf '%s\n' "$name" | tr / \|)
+      		esac    					
+
 		if [ "$PWD" = "$basedir" ]; then
 			relapath=$name
 		else
@@ -45,6 +51,7 @@ crawl() {
 
 			*[?\&]cmd=view*) # Directory
 				info 'Making directory: %s\n' "$relapath"
+    
 				[ -e "$name" ] ||
 					mkdir -- "$name" || exit
 				cd "$name" || exit
